@@ -2,17 +2,27 @@ let i = 0;
 let names = ["bulbasaur", "squirtle", "charmander"]
 let basepath = "";
 let ans = "";
+let difficulty = 'easy';
 
 let guessed = false;
 
 let score = 0;
 
+var monmap;
+
+function partialpath(){
+  return monmap[ans][difficulty].partial;
+}
+
+function fullpath(){
+  return monmap[ans][difficulty].full;
+}
+
 function resetimg(){
   let newind = Math.floor(Math.random() * 3);
   ans = names[newind];
-  basepath = ans + "/" + ans;
-  let path = basepath + "-eye.png";
-  document.getElementById("imgcontent").innerHTML = `<img src= ${path}>` ;
+
+  document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()}>` ;
   basepath += ".png";
   guessed = false;
 }
@@ -28,14 +38,23 @@ function submit(){
     score -= 0.5;
   }
   document.getElementById("score").innerHTML = score;
-  document.getElementById("imgcontent").innerHTML = `<img src= ${basepath}>` ;
+  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()}>` ;
   guessed = true;
 }
 
 function setDebug(str){
   document.getElementById("debug").innerHTML = str;
 }
+
+function init(){
+  fetch('monmap.json').then(response => response.json()).then((data) => {
+    monmap = data;
+
+    document.getElementById("next").onclick = resetimg;
+    document.getElementById("submit").onclick = submit;
+    resetimg()
+  })
+}
   
-document.getElementById("next").onclick = resetimg;
-document.getElementById("submit").onclick = submit;
-resetimg()   
+init()
+   

@@ -1,1 +1,0 @@
-{"bulbasaur":{"part":"placeholder","full":"placeholder"}}

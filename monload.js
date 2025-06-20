@@ -7,32 +7,54 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (input) => {
-  modify_mon(input, "bulbasaur", "easy", "partial.jpg", "full.jpg");
+  input = input.split(' ');
+  modify_mon(input[0], input[1], input[2], input[3], input[4]);
 }); 
 
 function modify_mon(file, mon, mode, partial, full){
   readData(file, mon, mode, partial, full).then((data) => {
-    fs.open(file, "w", function(err, f){
-      fs.writeFile(f, data, 'utf8', (err) => {});
-    });
+
+    if(data == null){
+      data = new Object();
+      data[mon] = new Object();
+    }
+    let temp = new Object();
+    move_mons(mon, mode, partial, full, (part, full) => {
+      temp.partial = part;
+      temp.full = full;
+      data[mon] = new Object();
+      data[mon][mode] = temp;
+      
+      console.log(data)
+
+      fs.open(file, "w", function(err, f){
+        fs.writeFile(f, JSON.stringify(data), 'utf8', (err) => {});
+      });
+    })
   });
 }
 
-function readData(file, mon, mode, partial, full){
+async function move_mons(mon, mode, partial, full, next){
+  let pathpre = `pokemon/${mon}/${mode}`
+  fs.mkdir(pathpre, {recursive: true}, (err, str) => {
+    let partpath = `${pathpre}/${partial}`
+    let fullpath = `${pathpre}/${full}`
+    fs.rename(partial, partpath, (err) => {});
+    fs.rename(full, fullpath, (err) => {});
+    next(partpath, fullpath);
+  });
+}
+
+function readData(file){
   return new Promise((resolve) => {
     fs.open(file, "r", function(err, f){
       fs.readFile(f,(err, data) => {
-        console.log(data.toString());
-        var existing = JSON.parse(data.toString());
-  
-        let temp = new Object();
-        temp.partial = partial;
-        temp.full = full;
-        existing[mon][mode] = temp;   
-        console.log(existing);
-        resolve(JSON.stringify(existing));
+        try {
+          resolve(JSON.parse(data.toString()));
+        } catch {
+          resolve(null);
+        }
       })
     })
   })
-  
 }
