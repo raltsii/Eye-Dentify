@@ -1,6 +1,5 @@
 let i = 0;
 let names = ["bulbasaur", "squirtle", "charmander"]
-let basepath = "";
 let ans = "";
 let difficulty = 'easy';
 
@@ -23,7 +22,6 @@ function resetimg(){
   ans = names[newind];
 
   document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()}>` ;
-  basepath += ".png";
   guessed = false;
 }
 
@@ -38,7 +36,7 @@ function submit(){
     score -= 0.5;
   }
   document.getElementById("score").innerHTML = score;
-  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()}>` ;
+  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()}>`;
   guessed = true;
 }
 
