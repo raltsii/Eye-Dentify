@@ -1,5 +1,5 @@
 let i = 0;
-let names = ["bulbasaur", "squirtle", "charmander"]
+let names = [];
 let ans = "";
 let difficulty = 'easy';
 
@@ -47,6 +47,14 @@ function setDebug(str){
 function init(){
   fetch('monmap.json').then(response => response.json()).then((data) => {
     monmap = data;
+
+    let autofill = "";
+    for(var key in monmap){
+      names.push(key);
+      autofill += `<option value="${key}" />\n`
+    }
+
+    document.getElementById("data").innerHTML = autofill;
 
     document.getElementById("next").onclick = resetimg;
     document.getElementById("submit").onclick = submit;
