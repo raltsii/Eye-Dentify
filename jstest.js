@@ -18,7 +18,7 @@ function fullpath(){
 }
 
 function resetimg(){
-  let newind = Math.floor(Math.random() * 3);
+  let newind = Math.floor(Math.random() * names.length);
   ans = names[newind];
 
   document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()}>` ;
