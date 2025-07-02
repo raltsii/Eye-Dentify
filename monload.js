@@ -39,7 +39,7 @@ function modify_mon(file, mon, mode, partial, full){
       data[mon] = new Object();
       data[mon][mode] = temp;
       
-      console.log(data)
+      //console.log(data)
 
       fs.open(file, "w", function(err, f){
         fs.writeFile(f, JSON.stringify(data), 'utf8', (err) => {});
@@ -53,13 +53,15 @@ async function move_mons(mon, mode, partial, full, next){
   fs.mkdir(pathpre, {recursive: true}, (err, str) => {
 
     let split = partial.split("/");
-    partial = split[split.length - 1];
+    let part = split[split.length - 1];
 
     split = full.split("/");
-    full = split[split.length - 1];
+    let ful = split[split.length - 1];
 
-    let partpath = `${pathpre}/${partial}`
-    let fullpath = `${pathpre}/${full}`
+    console.log(partial);
+
+    let partpath = `${pathpre}/${part}`
+    let fullpath = `${pathpre}/${ful}`
     fs.rename(partial, partpath, (err) => {});
     fs.rename(full, fullpath, (err) => {});
     next(partpath, fullpath);
