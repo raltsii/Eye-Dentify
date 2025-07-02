@@ -11,7 +11,8 @@ rl.on('line', (input) => {
   loaddata("monmap.json").then((data) => {
     ls(input).then(() => {
       console.log(lastdata);
-      fs.open(file, "w", function(err, f){
+      console.log("balls");
+      fs.open("monmap.json", "w", function(err, f){
         fs.writeFile(f, JSON.stringify(lastdata), 'utf8', (err) => {});
       });
     });
@@ -30,7 +31,7 @@ async function ls(path){
     let full = `${path}/${temp[0]}.png`
     let part = `${path}/gen1-eye/${temp[0]} Eye.png`
     let mon = temp[0].split(" ")[1];
-    lastdata = await modify_mon("monmap.json", mon, "easy", part, full);
+    lastdata = await modify_mon(mon, "easy", part, full);
   }
   return new Promise((resolve) => {resolve();})
 }
