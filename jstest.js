@@ -1,5 +1,8 @@
 let i = 0;
+
 let names = [];
+let monqueue = [];
+
 let ans = "";
 let difficulty = 'easy';
 
@@ -18,8 +21,8 @@ function fullpath(){
 }
 
 function resetimg(){
-  let newind = Math.floor(Math.random() * names.length);
-  ans = names[newind];
+  if(monqueue.length <= 0) resetqueue();
+  ans = monqueue.pop();
 
   document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()} height = 200px>` ;
   guessed = false;
@@ -45,6 +48,23 @@ function setDebug(str){
   document.getElementById("debug").innerHTML = str;
 }
 
+function resetqueue(){
+  monqueue = names.slice();
+  shuffle(monqueue);
+}
+
+function shuffle(arr){
+  let curr = arr.length;
+  while(curr != 0){
+    let rand = Math.floor(Math.random() * curr);
+    curr--;
+
+    let temp = arr[curr];
+    arr[curr] = arr[rand];
+    arr[rand] = temp;
+  }
+}
+
 function init(){
   fetch('monmap.json').then(response => response.json()).then((data) => {
     monmap = data;
@@ -59,6 +79,9 @@ function init(){
 
     document.getElementById("next").onclick = resetimg;
     document.getElementById("submit").onclick = submit;
+
+    resetqueue();
+
     resetimg()
   })
 }
