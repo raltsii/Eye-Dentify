@@ -15,7 +15,13 @@ rl.on('line', (input) => {
 async function ls(path){
   const dir = await fs.promises.opendir(path);
   for await (const dirent of dir){
-    console.log(dirent.name);
+    let temp = dirent.name;
+    temp = temp.split(".");
+    if(temp.length <= 1) continue;
+    let full = `${path}/${temp[0]}.png`
+    let part = `${path}/gen1-eye/${temp[0]} Eye.png`
+    let mon = temp[0].split(" ")[1];
+    modify_mon("monmap.json", mon, "easy", part, full);
   }
 }
 
