@@ -7,9 +7,17 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (input) => {
-  input = input.split(' ');
-  modify_mon(input[0], input[1], input[2], input[3], input[4]);
+  ls(input);
+  // input = input.split(' ');
+  // modify_mon(input[0], input[1], input[2], input[3], input[4]);
 }); 
+
+async function ls(path){
+  const dir = await fs.promises.opendir(path);
+  for await (const dirent of dir){
+    console.log(dirent.name);
+  }
+}
 
 function modify_mon(file, mon, mode, partial, full){
   readData(file, mon, mode, partial, full).then((data) => {
@@ -37,6 +45,13 @@ function modify_mon(file, mon, mode, partial, full){
 async function move_mons(mon, mode, partial, full, next){
   let pathpre = `pokemon/${mon}/${mode}`
   fs.mkdir(pathpre, {recursive: true}, (err, str) => {
+
+    let split = partial.split("/");
+    partial = split[split.length - 1];
+
+    split = full.split("/");
+    full = split[split.length - 1];
+
     let partpath = `${pathpre}/${partial}`
     let fullpath = `${pathpre}/${full}`
     fs.rename(partial, partpath, (err) => {});
