@@ -1,15 +1,24 @@
 const readline = require('node:readline');
 const fs = require('fs');
 
+let lastdata;
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 rl.on('line', (input) => {
-  ls(input);
+  loaddata("monmap.json").then((data) => {
+    ls(input).then(() => {
+      console.log(lastdata);
+      fs.open(file, "w", function(err, f){
+        fs.writeFile(f, JSON.stringify(lastdata), 'utf8', (err) => {});
+      });
+    });
+  });
   // input = input.split(' ');
   // modify_mon(input[0], input[1], input[2], input[3], input[4]);
+
 }); 
 
 async function ls(path){
@@ -21,31 +30,34 @@ async function ls(path){
     let full = `${path}/${temp[0]}.png`
     let part = `${path}/gen1-eye/${temp[0]} Eye.png`
     let mon = temp[0].split(" ")[1];
-    modify_mon("monmap.json", mon, "easy", part, full);
+    lastdata = await modify_mon("monmap.json", mon, "easy", part, full);
   }
+  return new Promise((resolve) => {resolve();})
 }
 
-function modify_mon(file, mon, mode, partial, full){
-  readData(file, mon, mode, partial, full).then((data) => {
-
+async function loaddata(file){
+  readData(file).then((data) => {
     if(data == null){
       data = new Object();
-      data[mon] = new Object();
     }
+    return new Promise((resolve) => {
+      lastdata = data;
+      resolve(data);
+    })
+  });
+}
+
+async function modify_mon(mon, mode, partial, full){
+  return new Promise((resolve) =>{
     let temp = new Object();
     move_mons(mon, mode, partial, full, (part, full) => {
       temp.partial = part;
       temp.full = full;
-      data[mon] = new Object();
-      data[mon][mode] = temp;
-      
-      //console.log(data)
-
-      fs.open(file, "w", function(err, f){
-        fs.writeFile(f, JSON.stringify(data), 'utf8', (err) => {});
-      });
+      if(lastdata[mon] == null) lastdata[mon] = new Object();
+      lastdata[mon][mode] = temp;
+      resolve(lastdata);
     })
-  });
+  })
 }
 
 async function move_mons(mon, mode, partial, full, next){
@@ -57,8 +69,6 @@ async function move_mons(mon, mode, partial, full, next){
 
     split = full.split("/");
     let ful = split[split.length - 1];
-
-    console.log(partial);
 
     let partpath = `${pathpre}/${part}`
     let fullpath = `${pathpre}/${ful}`
