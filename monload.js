@@ -71,8 +71,8 @@ async function move_mons(mon, mode, partial, full, next){
     split = full.split("/");
     let ful = split[split.length - 1];
 
-    let partpath = `${pathpre}/${part}`
-    let fullpath = `${pathpre}/${ful}`
+    let partpath = `${pathpre}/${part}`.replaceAll(" ", "-");
+    let fullpath = `${pathpre}/${ful}`.replaceAll(" ", "-");
     fs.rename(partial, partpath, (err) => {});
     fs.rename(full, fullpath, (err) => {});
     next(partpath, fullpath);
