@@ -21,8 +21,9 @@ function resetimg(){
   let newind = Math.floor(Math.random() * names.length);
   ans = names[newind];
 
-  document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()}>` ;
+  document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()} height = 200px>` ;
   guessed = false;
+  console.log(partialpath());
 }
 
 function submit(){
@@ -36,7 +37,7 @@ function submit(){
     score -= 0.5;
   }
   document.getElementById("score").innerHTML = score;
-  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()}>`;
+  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()} height = 200px>`;
   guessed = true;
 }
 
