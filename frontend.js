@@ -1,5 +1,4 @@
 let i = 0;
-
 let names = [];
 let monqueue = [];
 
@@ -49,30 +48,21 @@ function setDebug(str){
 }
 
 function resetqueue(){
-  monqueue = names.slice();
-  shuffle(monqueue);
-}
-
-function shuffle(arr){
-  let curr = arr.length;
-  while(curr != 0){
-    let rand = Math.floor(Math.random() * curr);
-    curr--;
-
-    let temp = arr[curr];
-    arr[curr] = arr[rand];
-    arr[rand] = temp;
-  }
+  monqueue = shuffled_copy(names);
 }
 
 function init(){
-  fetch('monmap.json').then(response => response.json()).then((data) => {
+
+  //read_json called here, must use ".then" in order to guarantee that data is gotten before rest of stuff is executed
+  read_json().then((data) => {
+
     monmap = data;
+    //object to array called here
+    names = object_to_array();
 
     let autofill = "";
-    for(var key in monmap){
-      names.push(key);
-      autofill += `<option value="${key}" />\n`
+    for(var name in names){
+      autofill += `<option value="${name}" />\n`
     }
 
     document.getElementById("data").innerHTML = autofill;
@@ -82,7 +72,7 @@ function init(){
 
     resetqueue();
 
-    resetimg()
+    resetimg();
   })
 }
   
