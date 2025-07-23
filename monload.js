@@ -1,5 +1,6 @@
-const readline = require('node:readline');
-const fs = require('fs');
+import readline from 'node:readline';
+import fs from 'fs';
+import Pokedex from 'pokedex-promise-v2'
 
 let lastdata;
 const rl = readline.createInterface({
@@ -17,8 +18,9 @@ rl.on('line', (input) => {
       });
     });
   });
-  // input = input.split(' ');
-  // modify_mon(input[0], input[1], input[2], input[3], input[4]);
+
+  input = input.split(' ');
+  modify_mon(input[0], input[1], input[2], input[3], input[4]);
 
 }); 
 
