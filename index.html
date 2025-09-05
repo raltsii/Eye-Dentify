@@ -1,27 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>eye-dentify!! #awesome</title>
+  <title>Eye-Dentify V0.1</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <h1>eye-dentify!! #awesome!!!</h1>
-  <h3>score: <span id="score">0</span></h3>
-  <span id="imgcontent"><img src="placeholder.png"> </span>
-  <p></p>
-  <p><span id="debug">balls</span></p>
-  <form>
-    <label for="mon">pokmeon!:</label><br>
-    <input type="text" id="monentry" list="datalist" name="monentry"><br>
-  </form>
-  <!-- <input type="button" id="newmon" value="reset"> -->
-  <input type="button" id="submit" value="submit">
-  <input type="button" id="next" value="next">
-  <p></p><p></p>
 
-<datalist id="datalist">
-  <span id="data">
-  </span>
-</datalist>
+<!--Red banner divider. Includes the images used to scale across the website-->
+  <div id="banner">
+
+    <img style="float:right" src="assets/bannerright.png">
+    <img style="position:absolute; left: 10px; top: 9px" src="assets/droparrow.png">
+    <img style="float:left" src="assets/bannerleft.png">
+    <div id="stupid">Eye - Dentify</div>
+  </div>
+<!-- dropshadow for the banner. it was easier this way -->
+  <div id="dropshadow"></div>
+
+<!--Contains all of the game elements, includint the hints and the pokemon -->
+  <div id="game">
+<!--Eye -->
+    <div id="eye">
+      <img style="padding-left: 25%; padding-top: 75px" id="imgcontent" src="" height= 200px>
+    </div>
+<!--Top half of the box on the top right. inclues mon name and gen hint -->
+    <div id="namegen">
+      <img style="float:right" src="assets/monrighttop.png">
+      <img style="float:left" src="assets/monlefttop.png">
+      <p class="shadow" id="gen" style="float:left; padding-left: 10px;">Generation</p>
+      <p class="whiteshadow" id="genhint" style="float:left; padding-left:6px; color: rgb(90,90,90); cursor:pointer" onclick="showGen();">[HINT]</p>
+      <p class="shadow" style="float:left; padding-left:20px" id="monname">It's...</p><br>
+    </div>
+<!--Bottom half of the box on the top right. includes the pokemons title -->
+    <div id="thetitlepokemon">
+      <img style="float:right" src="assets/monrightbottom.png">
+      <img style="float:left" src="assets/monleftbottom.png">
+      <p id="montitle">The _____ Pokemon</p>
+    </div>
+<!--Type hints -->
+    <div id="type">
+      <img style="float:right; padding: 10px; cursor:pointer" id="t2" src="" onclick="showType2();">
+      <img style="float:right; padding: 10px; cursor:pointer" id="t1" src="" onclick="showType();">
+    </div>
+
+  </div>
+
+<!--Includes the "meta" information, such as score, whether your guess was correct, and the actual user input -->
+    <div id="statsbar">
+      <img style="float:left" src="assets/dexleft.png">
+      <div style="float:left" id="stats">
+        <h3>score: <span id="score">0</span></h3>
+        <p><span id="debug"></span></p>
+        <form>
+          <label for="mon">Who's That Pokemon?</label><br>
+          <input type="text" id="monentry" list="datalist" name="monentry"><br>
+        </form>
+        <input type="button" id="submit" value="submit">
+        <input type="button" id="next" value="next">
+
+
+
+      </div>
+      <img style="float:right" src="assets/dexright.png">
+
+
+
+  </div>
+
+
+  <datalist id="datalist">
+    <span id="data">
+    </span>
+  </datalist>
+
+
+  <div class="footer">Made by Gictor and May </div>
 
 
 
@@ -29,6 +82,3 @@
 <script src="frontend.js"></script>
 </body>
 </html>
-
-
-

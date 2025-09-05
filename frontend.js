@@ -16,6 +16,7 @@ function fullpath(){
   return monmap[ans.data.name][difficulty].full;
 }
 
+
 function resetimg(){
   //check if queue is empty, then reset if needed
   if(queue.length <= 0) reset_queue();
@@ -36,8 +37,14 @@ function resetimg(){
 
   console.log(`${ex_name}:\nweight:${ex_weight}\nheight:${ex_height}\ntypes:${ex_t1}, ${ex_t2}\ngen:${ex_gen}`)
 
-  document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()} height = 200px>` ;
+  imgcontent.src = `${partialpath()}`;
   guessed = false;
+  console.log(partialpath());
+
+  t1.src = "assets/types/hint.png";
+  t2.src = "assets/types/hint.png";
+
+  //document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()} height = 200px>` ;
 }
 
 function submit(){
@@ -51,12 +58,28 @@ function submit(){
     score -= 0.5;
   }
   document.getElementById("score").innerHTML = score;
-  document.getElementById("imgcontent").innerHTML = `<img src= ${fullpath()} height = 200px>`;
+  imgcontent.src = `${fullpath()}`;
   guessed = true;
 }
 
 function setDebug(str){
   document.getElementById("debug").innerHTML = str;
+}
+
+function showGen(){
+  
+  document.getElementById("gen").innerHTML = "Generation 1";
+  document.getElementById("genhint").innerHTML = "";
+}
+
+function showType(){
+  t1.src = `assets/types/${ans.data.type1}.png`;
+  t1.style = "float:right; padding: 10px; cursor:auto";
+}
+
+function showType2(){
+  t2.src = `assets/types/${ans.data.type2 == null ? "none" : ans.data.type2}.png`;
+  t2.style = "float:right; padding: 10px; cursor:auto";
 }
 
 async function init(){

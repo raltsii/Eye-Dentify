@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ultra Ball</title>
+</head>
+
+<body>
+  <h1>Ultra Ball</h1>
+  <img id="random mon 1" src ="" alt="A Pokemon!" height = 200 px>
+  <img id="random mon 2" src ="" alt="A Second Pokemon!" height = 200 px>
+  <p></p>
+
+  <label>Guess that Pokemon!</label>
+  <input list="guess1" id="uGuess1">
+  <datalist id="guess1">
+    <option value=0 label="Bulbasaur">
+    <option value=1 label="Ivysaur">
+    <option value=2 label="Venosaur">
+    <option value=3 label="Charmander">
+    <option value=4 label="Charmeleon">
+    <option value=5 label="Charizard">
+    <option value=6 label="Squirtle">
+    <option value=7 label="Wartortle">
+    <option value=8 label="Blastoise">
+    <option value=9 label="Caterpie">
+  </datalist>
+
+  <input list="guess2" id="uGuess2">
+  <datalist id="guess2">
+    <option value=0 label="Bulbasaur">
+    <option value=1 label="Ivysaur">
+    <option value=2 label="Venosaur">
+    <option value=3 label="Charmander">
+    <option value=4 label="Charmeleon">
+    <option value=5 label="Charizard">
+    <option value=6 label="Squirtle">
+    <option value=7 label="Wartortle">
+    <option value=8 label="Blastoise">
+    <option value=9 label="Caterpie">
+  </datalist>
+
+  <button id="Submit">Submit</button>
+  <button id="Reload">New Mon</button>
+</body>
+
+<script>
+  const firstMon = document.getElementById('random mon 1');
+  const secMon = document.getElementById('random mon 2');
+  const checkBtn = document.getElementById('Submit');
+  const newBtn = document.getElementById('Reload');
+
+  const gmPoke = 'Pokeball/';
+  const gmUltra = 'Ultraball/';
+  const gmQuick = 'Quickball/';
+
+  const monArray = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png',];
+  var randomIndex = -1;
+    var secondIndex = -1;
+  var points = 0;
+  var attempts = 0;
+
+  checkBtn.addEventListener('click', () => {
+    const userGuess = document.getElementById('uGuess1');
+    const secGuess = document.getElementById('uGuess2');
+
+    attempts++;
+
+    if(Number(userGuess.value) == randomIndex && Number(secGuess.value) == secondIndex) {
+      points += 5 - attempts;
+      alert('Correct!\nAttempts taken: ' + attempts + '\nCurrent points: ' + points);
+      chooseRandomImage();
+      attempts = 0;
+    }
+    else {
+      alert('Incorrect :(\nCurrent attempts: ' + attempts);
+    }
+  });
+
+  newBtn.addEventListener('click', () => {
+    chooseRandomImage();
+    attempts = 0;
+  });
+
+  chooseRandomImage();
+
+  function chooseRandomImage() {
+    randomIndex = Math.floor(Math.random()*monArray.length);
+    do{
+    secondIndex = Math.floor(Math.random()*monArray.length);
+    }while(randomIndex==secondIndex);
+
+
+    if(randomIndex != Number(localStorage.getItem('index'))) {
+      firstMon.src = gmUltra + monArray[randomIndex];
+      localStorage.setItem('src', gmUltra + monArray[randomIndex]);
+
+      secMon.src = gmUltra + monArray[secondIndex];
+      localStorage.setItem('src', gmUltra + monArray[secondIndex]);
+    }
+    else {
+      chooseRandomImage();
+    }
+    localStorage.setItem('index', randomIndex);
+  }
+
+
+
+</script>
+
+</html>
