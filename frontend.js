@@ -41,8 +41,13 @@ function resetimg(){
   guessed = false;
   console.log(partialpath());
 
+
+// Resets all hints to their default state
   t1.src = "assets/types/hint.png";
   t2.src = "assets/types/hint.png";
+  document.getElementById("gen").innerHTML = "Generation";
+  document.getElementById("genhint").innerHTML = "[HINT]";
+  document.getElementById("monname").innerHTML = "Its...";
 
   //document.getElementById("imgcontent").innerHTML = `<img src= ${partialpath()} height = 200px>` ;
 }
@@ -53,6 +58,7 @@ function submit(){
   if(entry == ans.data.name){
     setDebug("correct");
     score++;
+    document.getElementById("monname").innerHTML = `${ans.data.name}`
   } else {
     setDebug("incorrect");
     score -= 0.5;
@@ -67,8 +73,8 @@ function setDebug(str){
 }
 
 function showGen(){
-  
-  document.getElementById("gen").innerHTML = "Generation 1";
+
+  document.getElementById("gen").innerHTML = `Generation ${ans.data.gen}`;
   document.getElementById("genhint").innerHTML = "";
 }
 
@@ -103,6 +109,5 @@ async function init(){
   reset_queue();
   resetimg();
 }
-  
+
 init()
-   
